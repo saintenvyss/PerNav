@@ -1,0 +1,31 @@
+name: Feature request
+description: An idea — a new provider, a new browser tool, a UX improvement.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's the problem or use case?
+      description: What are you trying to do that PerNav doesn't do (well) today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to happen?
+      description: |
+        Sketch the behavior you'd want. If it's a new provider with an
+        OpenAI-compatible API, include the base URL and where to get a key —
+        those land quickly (see CONTRIBUTING.md, "Adding a provider").
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Workarounds or alternatives you've considered
+  - type: checkboxes
+    id: pr
+    attributes:
+      label: Contribution
+      options:
+        - label: I'd be up for sending a PR for this

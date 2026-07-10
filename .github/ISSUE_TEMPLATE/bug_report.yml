@@ -1,0 +1,75 @@
+name: Bug report
+description: Something broke — a task fails, the bridge errors, the panel misbehaves.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report! The [Troubleshooting table in the README](https://github.com/saintenvyss/PerNav#troubleshooting)
+        covers the most common issues — worth a quick scan first.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, what happened instead?
+      placeholder: |
+        1. Opened the sidebar on https://example.com
+        2. Sent the task "…"
+        3. The agent said / the panel showed / the bridge printed …
+    validations:
+      required: true
+  - type: dropdown
+    id: provider
+    attributes:
+      label: AI provider
+      description: The provider selected in Settings when it happened.
+      options:
+        - Anthropic — Claude Code login
+        - Anthropic — setup token
+        - Anthropic — API key
+        - Codex CLI
+        - Gemini CLI
+        - Qwen Code
+        - Copilot CLI
+        - OpenAI
+        - Google Gemini (API key)
+        - Another OpenAI-compatible provider (say which below)
+        - Ollama (local)
+        - Custom endpoint
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      placeholder: e.g. claude-sonnet-5
+  - type: input
+    id: browser
+    attributes:
+      label: Browser + version
+      placeholder: e.g. Chrome 138, Brave 1.79, Edge 138
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: e.g. Windows 11, macOS 15, Ubuntu 24.04
+    validations:
+      required: true
+  - type: textarea
+    id: bridge-log
+    attributes:
+      label: Bridge output
+      description: |
+        The terminal output of the bridge around the failure (`cd bridge && npm start`).
+        **Remove anything private** — keys/tokens are never printed, but page URLs and task text can appear.
+      render: text
+  - type: textarea
+    id: panel-trace
+    attributes:
+      label: Panel tool-call trace / console errors
+      description: |
+        What the sidebar showed (the tool calls and messages), and any errors in its DevTools
+        console (right-click the panel → Inspect → Console).
+      render: text

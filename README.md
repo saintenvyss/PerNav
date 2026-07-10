@@ -14,6 +14,12 @@ at, and you watch a cursor glide to each element and click.
 Works in **any Chromium-based browser**: Chrome, Edge, Brave, Arc, Opera, Vivaldi,
 and friends.
 
+![PerNav searching Wikipedia for the Eiffel Tower and reading out its height](docs/demo.gif)
+
+*A real run (sped up ~4×): "How tall is the Eiffel Tower?" — PerNav types into
+the site's search box, picks the right suggestion, opens the article, and reads
+out the height, narrating every tool call in the sidebar.*
+
 ```
 ┌──────────────┐    WebSocket     ┌───────────────────────────────────┐
 │  Extension   │ ◀──────────────▶ │  Bridge (Node, runs locally)      │
@@ -122,6 +128,17 @@ on your machine; the extension only ever sees masked previews.
    conversation. **Esc** interrupts the current action (and, with text in the box, sends
    your message immediately).
 
+## Screenshots
+
+**The agent at work** — cursor overlay and action tooltip on the page, live
+tool-call trace in the sidebar:
+
+![PerNav's cursor typing "Eiffel Tower" into Wikipedia's search box while the sidebar shows the tool-call trace](docs/shot-typing.png)
+
+**The result** — the article it opened on the left, the answer it read on the right:
+
+![The Eiffel Tower article open in the browser with PerNav's answer in the sidebar](docs/shot-result.png)
+
 ## Fast + background operation
 
 - **Every action returns the updated page state** — the agent doesn't re-snapshot after
@@ -202,6 +219,13 @@ The gear icon in the sidebar opens Settings:
 - `launch.ps1` / `launch.sh` — optional one-command launch: start the bridge +
   open any installed Chromium-based browser with the extension loaded in an
   isolated profile.
+
+## Contributing
+
+PRs welcome — there's no build step, it's all vanilla JS, and most changes fit
+in a single file. [CONTRIBUTING.md](CONTRIBUTING.md) has the dev loop and a
+guide to adding a provider (usually one registry entry). Bugs and ideas →
+[issues](https://github.com/saintenvyss/PerNav/issues).
 
 ## License
 

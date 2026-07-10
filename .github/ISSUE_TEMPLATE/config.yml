@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Troubleshooting guide
+    url: https://github.com/saintenvyss/PerNav#troubleshooting
+    about: The README's troubleshooting table covers the most common setup issues.

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "PerNav",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "Open-source AI sidebar that drives your browser, powered by your own Claude subscription or API key via a local bridge.",
   "permissions": ["debugger", "sidePanel", "tabs", "activeTab", "scripting", "storage"],
   "host_permissions": ["<all_urls>"],

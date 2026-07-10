@@ -4,6 +4,9 @@
   "private": true,
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "description": "Local bridge: your own AI account (Claude subscription/API key; CLI subscriptions: Codex CLI/ChatGPT, Gemini CLI, Qwen Code, Copilot CLI; or any OpenAI-compatible provider: OpenAI, Gemini, Grok, DeepSeek, Qwen, Kimi, GLM, MiniMax, Mistral, Groq, OpenRouter, Ollama) <-> browser extension over WebSocket.",
   "scripts": {
     "start": "node bridge.mjs"

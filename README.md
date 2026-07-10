@@ -72,7 +72,8 @@ npm start
 > finds (Chrome, Edge, Brave, Vivaldi, Opera, Chromium) with the extension
 > already loaded, in an isolated profile that never touches your daily one. Pick a
 > specific browser with `.\launch.ps1 -Browser brave` / `./launch.sh brave`, or pass
-> a full path to any Chromium-based binary.
+> a full path to any Chromium-based binary. (If Windows blocks the script, run
+> `powershell -ExecutionPolicy Bypass -File .\launch.ps1` instead.)
 
 **3. Connect an account** — open the **Settings tab** (gear icon in the sidebar), pick
 an **AI provider**, and connect it:
@@ -81,8 +82,8 @@ an **AI provider**, and connect it:
 
 | Method | Billing | How |
 |---|---|---|
-| **Claude Code login** (recommended) | Your Claude Pro/Max subscription | Run `claude` in a terminal, then `/login`. The bridge picks it up automatically — Settings will show "Connected". |
-| **Subscription token** | Your Claude Pro/Max subscription | Run `claude setup-token` in a terminal, paste the token into Settings. Good when you don't want the full CLI login on this machine. |
+| **Claude Code login** (recommended) | Your Claude Pro/Max subscription | Install [Claude Code](https://claude.com/claude-code) if you don't have it (`npm i -g @anthropic-ai/claude-code`), run `claude`, then `/login`. The bridge picks it up automatically — Settings will show "Connected". |
+| **Subscription token** | Your Claude Pro/Max subscription | Run `claude setup-token` (needs the Claude Code CLI, on any machine), paste the token into Settings. Good when you don't want the full CLI login on this machine. |
 | **API key** | Pay-as-you-go (no subscription needed) | Create a key at [console.anthropic.com](https://console.anthropic.com), paste it into Settings. |
 
 **Your AI CLIs** — if you already use an agent CLI, PerNav can run on its login
@@ -194,6 +195,7 @@ The gear icon in the sidebar opens Settings:
 | Symptom | Fix |
 |---|---|
 | `bridge: offline` (red dot) | Start the bridge (`cd bridge && npm start`); it must say "listening". |
+| `.\launch.ps1` → "running scripts is disabled" | Windows' default execution policy blocks unsigned scripts. Run `powershell -ExecutionPolicy Bypass -File .\launch.ps1`. |
 | Auth error when you send a task | Open Settings → Account. For Anthropic: log in (`claude` → `/login`), paste a `claude setup-token` token, or use an API key. For CLI providers: install the CLI and log in (commands shown in Settings). For other providers: check the API key and endpoint. |
 | CLI provider says the CLI isn't installed but it is | The bridge looks on PATH; if the CLI lives elsewhere, put its full path in the Account section's path field (Settings) and Save. |
 | Model list only shows a few entries | Save the provider's API key first, then hit **refresh list** — the full list comes live from the provider. Any model id also works via *Custom model id*. |

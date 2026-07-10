@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+  <header>
+    <div class="brand"><svg width="15" height="15" viewBox="0 0 128 128" aria-hidden="true"><path d="M20 79H96M46 85A28 28 0 1 1 46 29A28 28 0 1 1 46 85M94 63L110 79 94 95" fill="none" stroke="currentColor" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/></svg><span>PerNav</span></div>
+    <div class="hdr-right">
+      <span id="status" class="dot off" title="bridge connection"></span>
+      <button id="gear" class="icon" title="Settings" aria-label="Settings">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <button id="menu" class="icon" title="Chats" aria-label="Chats">&#8943;</button>
+    </div>
+  </header>
+
+  <div id="history" class="hidden"></div>
+
+  <main id="settings">
+    <div class="set-note" id="setOffline">Bridge offline. Start it (<code>cd bridge &amp;&amp; npm start</code>) to manage your account and model. The bridge address below can still be changed.</div>
+
+    <section class="set-group">
+      <div class="set-label">AI provider</div>
+      <select id="providerSelect" class="set-input"></select>
+      <div class="set-hint">Top group: subscription and account logins with no API key, covering Claude (Claude Code engine) and installed agent CLIs (Codex&nbsp;CLI on your ChatGPT plan, Gemini&nbsp;CLI, Qwen&nbsp;Code, Copilot&nbsp;CLI). Bottom group: providers connected through their OpenAI-compatible API with an API key.</div>
+    </section>
+
+    <section class="set-group">
+      <div class="set-label">Account</div>
+      <div class="set-card">
+        <span id="authDot" class="dot off"></span>
+        <span id="authText">Checking&hellip;</span>
+      </div>
+      <div id="anthAuth">
+        <label class="set-radio">
+          <input type="radio" name="auth" value="claude-login" />
+          <div class="set-body">
+            <div class="t">Claude subscription · Claude Code login <span class="tag">recommended</span></div>
+            <div class="d">Uses the <code>claude</code> CLI login on this machine: run <code>claude</code> in a terminal, then <code>/login</code> with your Pro or Max account. Usage bills your subscription; no API key needed.</div>
+          </div>
+        </label>
+        <label class="set-radio">
+          <input type="radio" name="auth" value="token" />
+          <div class="set-body">
+            <div class="t">Claude subscription · setup token</div>
+            <div class="d">Run <code>claude setup-token</code> in a terminal and paste the token here. Also bills your subscription; stored only on this machine.</div>
+            <input id="tokenInput" class="set-input" type="password" placeholder="sk-ant-oat01-&hellip;" autocomplete="off" spellcheck="false" />
+          </div>
+        </label>
+        <label class="set-radio">
+          <input type="radio" name="auth" value="api-key" />
+          <div class="set-body">
+            <div class="t">Anthropic API key</div>
+            <div class="d">No subscription needed; pay-as-you-go billing. Create a key at console.anthropic.com.</div>
+            <input id="keyInput" class="set-input" type="password" placeholder="sk-ant-api03-&hellip;" autocomplete="off" spellcheck="false" />
+          </div>
+        </label>
+      </div>
+      <div id="provAuth" class="hidden">
+        <input id="provKeyInput" class="set-input" type="password" placeholder="API key&hellip;" autocomplete="off" spellcheck="false" />
+        <div class="set-hint" id="provKeyHint"></div>
+        <input id="provBaseInput" class="set-input" type="text" placeholder="https://&hellip;/v1" spellcheck="false" />
+        <div class="set-hint" id="provBaseHint">Endpoint (OpenAI-compatible base URL). Change only for proxies, regional endpoints, or local servers.</div>
+      </div>
+      <div id="cliAuth" class="hidden">
+        <div class="set-hint" id="cliNote"></div>
+        <div class="set-hint" id="cliSetup"></div>
+        <input id="cliPathInput" class="set-input" type="text" placeholder="CLI command or full path (blank = auto-detect)" spellcheck="false" />
+        <div class="set-hint">Optional. Only needed if auto-detect can't find the CLI (e.g. a non-standard install location).</div>
+      </div>
+    </section>
+
+    <section class="set-group">
+      <div class="set-label">Model <button id="modelRefresh" class="set-mini" title="Fetch every available model from the provider">&#8635; refresh list</button></div>
+      <select id="modelSelect" class="set-input"></select>
+      <input id="modelCustom" class="set-input hidden" type="text" placeholder="model id, e.g. claude-sonnet-5" spellcheck="false" />
+      <div class="set-hint" id="modelHint"></div>
+    </section>
+
+    <section class="set-group">
+      <div class="set-label">Bridge address</div>
+      <input id="bridgeInput" class="set-input" type="text" placeholder="ws://127.0.0.1:8765" spellcheck="false" />
+      <div class="set-hint">Where the local bridge listens. Leave the default unless you set PERNAV_PORT.</div>
+    </section>
+
+    <div class="set-actions">
+      <button id="settingsSave" class="set-save">Save</button>
+      <span id="setMsg" class="set-msg"></span>
+    </div>
+
+    <section class="set-group">
+      <div class="set-label">Data</div>
+      <button id="clearChats" class="set-danger">Clear all chats</button>
+      <div class="set-hint">Chats live only in this browser's extension storage; tokens and keys live only in the bridge's config file on this machine.</div>
+    </section>
+
+    <div class="set-foot" id="setAbout">PerNav</div>
+  </main>
+
+  <main id="log">
+    <div id="empty">
+      <svg class="mark" width="44" height="44" viewBox="0 0 128 128" fill="none" aria-hidden="true">
+        <path class="m1" pathLength="1" d="M16 76H33.4" stroke="#34373d" stroke-width="12" stroke-linecap="round"/>
+        <path class="m2" pathLength="1" d="M33.4 76A26 26 0 1 1 66.6 36A26 26 0 1 1 33.4 76" stroke="#4a4e55" stroke-width="12" stroke-linecap="round"/>
+        <path class="m3" pathLength="1" d="M66.6 76H102M94 58L112 76 94 94" stroke="#6d727b" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="empty-sub">Give PerNav a task on the page you're viewing. It navigates, clicks, types, and reads the results.</div>
+      <div class="empty-egs">
+        <button class="eg" type="button">Summarize this page</button>
+        <button class="eg" type="button">Extract the main data as a table</button>
+        <button class="eg" type="button">Fill in the form on this page</button>
+      </div>
+    </div>
+  </main>
+
+  <div id="tabbar"><span id="tabinfo">&nbsp;</span></div>
+
+  <footer>
+    <div id="atmenu" class="hidden"></div>
+    <div id="chips" class="chips hidden"></div>
+    <div class="inputwrap">
+      <button id="control" class="ctrl" title="Control browser" aria-label="Control browser">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <path d="M5 2.5l13 7.2-5.6 1.6L9.3 18 5 2.5z" fill="currentColor"/>
+        </svg>
+      </button>
+      <textarea id="input" rows="1" placeholder="Describe a task&hellip;"></textarea>
+      <button id="send" class="send" title="Send" aria-label="Send">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </button>
+    </div>
+  </footer>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+# launch.sh must keep LF endings even when the repo is cloned on Windows
+# (core.autocrlf=true would otherwise convert it and break bash).
+launch.sh text eol=lf

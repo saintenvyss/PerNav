@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+
+# bridge runtime logs
+bridge/*.log
+bridge/bridge-run.*
+
+# isolated browser profiles created by launch.ps1 / launch.sh
+.profiles/
+
+# OS noise
+Thumbs.db
+.DS_Store
